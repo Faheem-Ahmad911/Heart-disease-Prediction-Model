@@ -4,6 +4,5 @@ matplotlib
 seaborn
 sklearn
 keras
-tensorflow
 fpdf
 
