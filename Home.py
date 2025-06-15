@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 import EDA as eda_page
 import Model as model_page
+import conclusion_page  # Add this import
 
 # Page configuration
 st.set_page_config(
@@ -506,9 +507,10 @@ def main_app():
     
     st.sidebar.markdown("---")
     st.sidebar.markdown("### 🧭 Navigation")
+    # Updated menu with Conclusion page
     menu = st.sidebar.radio(
         "",
-        ["🏠 Home", "📊 EDA", "🤖 Model"],
+        ["🏠 Home", "📊 EDA", "🤖 Model", "📝 Conclusion"],  # Added Conclusion
         format_func=lambda x: x.split(" ", 1)[1]
     )
 
@@ -533,7 +535,7 @@ def main_app():
     except:
         pass
 
-    # Page Control
+    # Page Control - Updated with Conclusion page
     if menu == '🏠 Home':
         # Hero Section
         col1, col2, col3 = st.columns([1, 3, 1])
@@ -548,7 +550,7 @@ def main_app():
         # Feature Cards Section
         st.markdown("## ✨ Key Features")
         
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)  # Added 4th column for Conclusion
         
         with col1:
             st.markdown("""
@@ -571,6 +573,14 @@ def main_app():
             <div class="feature-card">
                 <h3>⚡ Real-time Prediction</h3>
                 <p>Instant risk assessment with confidence intervals</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col4:
+            st.markdown("""
+            <div class="feature-card">
+                <h3>📝 Project Summary</h3>
+                <p>Comprehensive conclusions and key insights from analysis</p>
             </div>
             """, unsafe_allow_html=True)
         
@@ -638,6 +648,11 @@ def main_app():
 
     elif menu == '🤖 Model':
         model_page.render()
+    
+    elif menu == '📝 Conclusion':  # Added Conclusion page handling
+        # Store completion date in session state for the conclusion page
+        st.session_state.completion_date = datetime.now().strftime('%B %Y')
+        conclusion_page.show_conclusion_page()
 
     # Footer
     st.markdown("---")
